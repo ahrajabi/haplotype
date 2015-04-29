@@ -1,25 +1,12 @@
 import datetime
 
-def set_find(par , y):
-    if par[y] == y:
-        return y
-    par[y] = set_find(par , par[y])
-    return par[y]
-
-def set_merge(par , cat , x , y):
-    temp = set_find(par , x)
-    par[set_find(par , x)] = set_find(par , y)
-    cat[temp] = False
-    
-def set_same(par , x , y):
-    return set_find(par , x) == set_find(par , y)
 
 def hamming_distance(s1, s2):
     if len(s1) != len(s2):
         raise ValueError("Undefined for sequences of unequal length, {} and {}" , s1 , s2)
     return sum(ch1 != ch2 for ch1, ch2 in zip(s1, s2))
 
-
+'''
 def set_print_components(node , par):
     text_file = open('log/node_{}.txt'.format(datetime.datetime.now()) , 'a' )
     label = False
@@ -33,7 +20,7 @@ def set_print_components(node , par):
 		text_file.write("{0} {1}\n".format(cnt2 , j  ))
     text_file.close()
     
-
+'''
 def connect(nid1 , nid2 ):
 	ret = []
 	if len(nid1) != len(nid2) :

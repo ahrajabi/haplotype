@@ -2,24 +2,41 @@ from assist import *
 import random
 import datetime
 class GNode:
-	def __init__(self , node , par , cat ):
-		self.Par = list(par)
-		self.Node = list(node)
-		self.NodeNumber = len(self.Node)
-		self.Cat = list(cat)
-		self.ExtraNode = dict()
-		self.OriginalNodeNumbers = len(par)
+	def __init__(self):
+		self.Node = dict()
+		self.ParentCounter = 0
 
-	def addNode(self , nid):
-		self.Node.append(nid)
-		self.NodeNumber = len(self.Node)
-		cnt = self.NodeNumber -1
-		self.Par.append( cnt )
-		self.Cat.append(True)
+	def addNode(self , nstring , ntype):
+		new = dict()
+		new['string'] = nstring
+		new['type'] = ntype
+		self.ParentCounter += 1
+		new['parent'] = self.ParentCounter
+		new['edge'] = dict()
 
-		for cnt2, i in enumerate( self.Node ):
-			if not set_same(self.Par , cnt , cnt2 ) and hamming_distance( nid , i ) < 2 :
-				set_merge(self.Par, self.Cat , cnt , cnt2 )
+		for otherId , other in self.Node.iteritems():
+		    new['edge'][otherId] = hamming_distance(other['string'] , new['string'] )
+               	self.Node[self.ParentCounter] = new
+                print self.Node
+                '''
+                for otherId , other in self.Node.iteritems():
+                    if otherId is not self.ParentCounter and self.Node[self.ParentCounter]['edge'][otherId] == 1 and not self.set_same( self.ParentCounter , otherId ) :
+                        self.set_merge( self.ParentCounter , otherId )
+               '''
+
+        def set_find(self , y):
+            if self.Node[y] == y:
+                return y
+            self.Node[y]['parent'] =  self.set_find( self.Node[y]['parent'] )
+            return self.Node[y]['parent']
+
+        def set_same(self , x , y ):
+            return self.set_find(x) == self.set_find(y)
+
+        def set_merge(self , x , y):
+            self.Node[ self.set_find(x) ]['parent'] = self.set_find(y)
+
+'''
 	
 	def getParents(self):
 		ret = list()
@@ -29,7 +46,7 @@ class GNode:
 		return ret
 
 	def linkTwoComponents(self , nid1 , nid2 ):
-		if set_same(self.Par , nid1 , nid2):
+		if set_same(self.node[] , nid1 , nid2):
 			raise ValueError("Two parents are on same components.")
 		else:
 			addedNodes =  connect(self.Node[nid1] , self.Node[nid2] )
@@ -98,4 +115,4 @@ class GNode:
 		text_file.close()
 
 
-
+'''

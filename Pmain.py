@@ -31,12 +31,22 @@ def decodeFile(filename):
             if t == False:
                 cnt2 += 1
                 node.append(tt)
-                print tt
     return details , node
 
 
 def main():
     details , node = decodeFile('file.txt')
+    obj = GNode()
+    obj.addNode('111' , 'original')
+    obj.addNode('000' , 'original')
+    obj.addNode('110' , 'original')
+    '''
+    for i in node:
+        obj.addNode( i , 'original' )
+'''
+
+    print obj.Node
+'''
     HammingDistance = []   
     for cnt , i in enumerate(node):
         par.append( cnt)
@@ -60,7 +70,7 @@ def main():
 
     mainn2.linkComponents()
     mainn2.printLog()
-    
+''' 
 
 
 if __name__ == '__main__' : 
